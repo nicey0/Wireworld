@@ -22,10 +22,11 @@ WIDTH = 90
 HEIGHT = 50
 
 # The board will be stored in a list of integers, having each integer be EMPTY, EHEAD, or ETAIL or CONDUCTOR.
-# The X and Y of a cell will be taken with the gc function
+# The X and Y of a cell will be taken with the location function
 # The cell is going to be calculated in the calc_cell function, which returns the next cell type
 
-def get_pixels(path: str) -> list:    
+
+def get_pixels(path: str) -> list:
     img = Image.open(path)
     if tuple(img.size) == (WIDTH, HEIGHT):
         pixels = []
@@ -46,14 +47,18 @@ def get_pixels(path: str) -> list:
         return pixels
     raise ValueError
 
+
 def location(x: int, y: int) -> int:
-    return y * WIDTH + x 
+    return y * WIDTH + x
+
 
 def get_value(board, x: int, y: int) -> int:
     return board[location(x, y)]
 
+
 def set_value(board, x: int, y: int, new: int) -> None:
     board[location(x, y)] = new
+
 
 def valid(coor, dim):
     if dim == 'x':
@@ -61,8 +66,9 @@ def valid(coor, dim):
     else:
         return True if coor >= 0 and coor <= HEIGHT-1 else False
 
+
 def get_x_neigh(board, x: int, y: int) -> int:
-    ng = 0 
+    ng = 0
     # Left
     if x > 0 and valid(y, HEIGHT):
         if get_value(board, x-1, y) == EHEAD:
@@ -72,6 +78,7 @@ def get_x_neigh(board, x: int, y: int) -> int:
         if get_value(board, x+1, y) == EHEAD:
             ng += 1
     return ng
+
 
 def get_y_neigh(board, x: int, y: int) -> int:
     ng = 0
@@ -84,6 +91,7 @@ def get_y_neigh(board, x: int, y: int) -> int:
         if get_value(board, x, y+1) == EHEAD:
             ng += 1
     return ng
+
 
 def get_neigh(board, x: int, y: int) -> int:
     ng = 0
@@ -100,6 +108,7 @@ def get_neigh(board, x: int, y: int) -> int:
     ng += get_x_neigh(board, x, y+1)
     # print("Diagonal - Bottom:", get_x_neigh(board, x, y+1))
     return ng
+
 
 def calc_cell(board: list, x: int, y: int) -> int:
     ct = get_value(board, x, y)
@@ -120,6 +129,7 @@ def calc_cell(board: list, x: int, y: int) -> int:
             return CONDUCTOR
     else:
         raise ValueError
+
 
 def wireworld(name):
     board = get_pixels(name + ".png")
@@ -142,7 +152,7 @@ def wireworld(name):
             screen = ""
             for y in range(HEIGHT):
                 for x in range(WIDTH):
-                    val = get_value(board, x ,y)
+                    val = get_value(board, x, y)
                     if val == CONDUCTOR:
                         screen += b.YELLOW
                     elif val == EHEAD:
@@ -167,5 +177,5 @@ def wireworld(name):
         os.system('clear')
         sys.exit(0)
 
-wireworld("gates")
 
+wireworld("gates")
