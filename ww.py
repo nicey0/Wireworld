@@ -11,6 +11,14 @@ CONDUCTOR = 1
 EHEAD = 2
 ETAIL = 3
 
+# Value to cell type
+val_to_cell = {
+    CONDUCTOR: b.YELLOW,
+    EHEAD: b.LIGHTBLUE_EX,
+    ETAIL: b.RED,
+    EMPTY: b.BLACK
+}
+
 # Cell colors
 EMPTY_C = (0, 0, 0)
 CONDUCTOR_C = (255, 255, 0)
@@ -153,16 +161,7 @@ def wireworld(name):
             for y in range(HEIGHT):
                 for x in range(WIDTH):
                     val = get_value(board, x, y)
-                    if val == CONDUCTOR:
-                        screen += b.YELLOW
-                    elif val == EHEAD:
-                        screen += b.LIGHTBLUE_EX
-                    elif val == ETAIL:
-                        screen += b.RED
-                    elif val == EMPTY:
-                        screen += b.BLACK
-                    else:
-                        screen += b.GREEN
+                    screen += val_to_cell[val]
                     screen += f"  "
                     # Reset colors every cell
                     screen += Style.RESET_ALL
