@@ -99,20 +99,15 @@ def get_y_neigh(board, x: int, y: int) -> int:
 
 
 def get_neigh(board, x: int, y: int) -> int:
-    ng = 0
-    # Horizontal
-    ng += get_x_neigh(board, x, y)
-    # print("Horizontal:", get_x_neigh(board, x, y))
-    # Vertical
-    ng += get_y_neigh(board, x, y)
-    # print("Vertical:", get_y_neigh(board, x, y))
-    # Diagonal - Top
-    ng += get_x_neigh(board, x, y-1)
-    # print("Diagonal - Top:", get_x_neigh(board, x, y-1))
-    # Diagonal - Bottom
-    ng += get_x_neigh(board, x, y+1)
-    # print("Diagonal - Bottom:", get_x_neigh(board, x, y+1))
-    return ng
+    return (
+        # Horizontal
+        get_x_neigh(board, x, y) + \
+        # Vertical
+        get_y_neigh(board, x, y)  + \
+        # Diagonal - Top
+        get_x_neigh(board, x, y-1) + \
+        # Diagonal - Bottom
+        get_x_neigh(board, x, y+1))
 
 
 def calc_cell(board: list, x: int, y: int) -> int:
@@ -140,8 +135,7 @@ def wireworld(name):
     board = get_pixels(name + ".png")
     try:
         while True:
-            x = 0
-            y = 0
+            x = y = 0
             # new_pixels is used to append each pixel after it has been updated. Used
             # so you can update each pixel "at the same time", as per Conway's Game of Life
             # rules.
