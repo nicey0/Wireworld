@@ -12,7 +12,7 @@ EHEAD = 2
 ETAIL = 3
 
 # Value to cell type
-val_to_cell = {
+CELL_TO_COLOR = {
     CONDUCTOR: b.YELLOW,
     EHEAD: b.LIGHTBLUE_EX,
     ETAIL: b.RED,
@@ -69,10 +69,7 @@ def set_value(board, x: int, y: int, new: int) -> None:
 
 
 def valid(coor, dim):
-    if dim == 'x':
-        return True if coor >= 0 and coor <= WIDTH-1 else False
-    else:
-        return True if coor >= 0 and coor <= HEIGHT-1 else False
+    return coor >= 0 and coor <= WIDTH-1 and coor <= HEIGHT-1
 
 
 def get_x_neigh(board, x: int, y: int) -> int:
@@ -161,7 +158,7 @@ def wireworld(name):
             for y in range(HEIGHT):
                 for x in range(WIDTH):
                     val = get_value(board, x, y)
-                    screen += val_to_cell[val]
+                    screen += CELL_TO_COLOR[val]
                     screen += f"  "
                     # Reset colors every cell
                     screen += Style.RESET_ALL
